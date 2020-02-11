@@ -6,63 +6,63 @@ import (
 )
 
 func Process() {
-	M := 121
-	RR := 30
-	CC := 4
-	var ROFFSET int
-	var C int
-	var JPRIME bool
-	var N int
-	MULT := [10]int{}
-	J := 1
-	K := 1
-	ORD := 2
-	SQUARE := 9
-	P := [122]int{}
-	P[1] = 2
-	for K < M {
+	numberOfPrimesToFind := 121
+	maxRowNumber := 30
+	maxColumnNumber := 4
+	var rowOffset int
+	var column int
+	var isPrime bool
+	var primeMultipleIndex int
+	primesMultiples := [10]int{}
+	numberToTest := 1
+	numberOfPrimesFound := 1
+	limitSqrtIndex := 2
+	limit := 9
+	primes := [122]int{}
+	primes[1] = 2
+	for numberOfPrimesFound < numberOfPrimesToFind {
 		for {
-			J += 2
-			if J == SQUARE {
-				ORD = ORD + 1
-				SQUARE = P[ORD] * P[ORD]
-				MULT[ORD - 1] = J
+			numberToTest += 2
+			if numberToTest == limit {
+				limitSqrtIndex = limitSqrtIndex + 1
+				limit = primes[limitSqrtIndex] * primes[limitSqrtIndex]
+				primesMultiples[limitSqrtIndex- 1] = numberToTest
 			}
-			N = 2
-			JPRIME = true
-			for N < ORD && JPRIME {
-				for MULT[N] < J {
-					MULT[N] += P[N] + P[N]
+			primeMultipleIndex = 2
+			isPrime = true
+			for primeMultipleIndex < limitSqrtIndex && isPrime {
+				for primesMultiples[primeMultipleIndex] < numberToTest {
+					primesMultiples[primeMultipleIndex] += primes[primeMultipleIndex] + primes[primeMultipleIndex]
 				}
-				if MULT[N] == J {
-					JPRIME = false
+				if primesMultiples[primeMultipleIndex] == numberToTest {
+					isPrime = false
 				}
-				N++
+				primeMultipleIndex++
 			}
-			if JPRIME {
+			if isPrime {
 				break
 			}
 		}
-		K++
-		P[K] = J
+		numberOfPrimesFound++
+		primes[numberOfPrimesFound] = numberToTest
 	}
 
-	PNBR := 1
-	POFFSET := 1
-	for POFFSET <= M {
+	pageIndex := 1
+	pageOffset := 1
+	for pageOffset <= numberOfPrimesToFind {
 		fmt.Println("---------------------------------------------")
-		fmt.Println("**** The First " + strconv.Itoa(M) + " Prime numbers # Page " + strconv.Itoa(PNBR) + " **** ")
+		fmt.Println("**** The First " + strconv.Itoa(numberOfPrimesToFind) + " Prime numbers # Page " + strconv.Itoa(pageIndex) + " **** ")
 		fmt.Println("---------------------------------------------")
-		for ROFFSET = POFFSET; ROFFSET < POFFSET + RR; ROFFSET++ {
-			for C = 0; C < CC; C++ {
-				if ROFFSET+C*RR <= M {
-					fmt.Printf("%12v", P[ROFFSET+C*RR])
+		for rowOffset = pageOffset; rowOffset < pageOffset + maxRowNumber; rowOffset++ {
+			for column = 0; column < maxColumnNumber; column++ {
+				if rowOffset + column * maxRowNumber <= numberOfPrimesToFind {
+					fmt.Printf("%12v", primes[rowOffset + column * maxRowNumber])
 				}
 			}
 			fmt.Println("")
 		}
 		fmt.Println("")
-		PNBR += 1
-		POFFSET += RR * CC
+		pageIndex += 1
+		pageOffset += maxRowNumber * maxColumnNumber
 	}
 }
