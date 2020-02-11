@@ -5,8 +5,7 @@ import (
 	"strconv"
 )
 
-func Process() {
-	numberOfPrimesToFind := 121
+func FindPrimes(numberOfPrimesToFind int) {
 	maxRowNumber := 30
 	maxColumnNumber := 4
 	var rowOffset int

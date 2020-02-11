@@ -3,7 +3,7 @@ package tool
 
 func ExampleProcess_should() {
 	//WHEN
-	Process()
+	FindPrimes(121)
 
 	//OUTPUT:
 	//---------------------------------------------	
